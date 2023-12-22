@@ -9,9 +9,12 @@ import java.util.stream.Stream;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.HeaderOfSubject;
+import com.example.demo.entity.SideOfContent;
+import com.example.demo.pojo.ListOfHeader;
 import com.example.demo.service.Book;
 import com.example.demo.service.BookService;
 import com.example.demo.service.HeaderOfSubjectAndSideOfSubject;
@@ -36,34 +41,35 @@ public class RestControllerExample {
 	@Autowired
 	HeaderOfSubjectAndSideOfSubject headerOfSubjectAndSideOfSubject;
 	
-	public ResponseEntity<List<HeaderOfSubject>>  getAllHeaders(){
-		List<HeaderOfSubject> header=headerOfSubjectAndSideOfSubject.finallHeader().;
-		
-//		return new ResponseEntity<>(header,HttpStatus.SC_OK);
-		return new ResponseEntity<>(null,HttpStatus.SC_OK);
-		
+	@GetMapping("/getallheaders")
+	public ResponseEntity<Object>  getAllHeaders(){
+		List<HeaderOfSubject> header=headerOfSubjectAndSideOfSubject.finallHeader();
+	     if(header.size()>0) {
+	    	 return  ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body(header);
+	     }
+		return  ResponseEntity.status(HttpStatus.SC_OK).body(header);	
+	}
+	@GetMapping("/findbyidheaders/{id}")
+	public ResponseEntity<Object>  findByIdHeaders(@PathVariable("id") long id){
+		List<HeaderOfSubject> header=headerOfSubjectAndSideOfSubject.findByIdHeaders(id);
+	     if(header.size()>0) {
+	    	 return  ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body(header);
+	     }
+		return  ResponseEntity.status(HttpStatus.SC_OK).body(header);	
 	}
 	
-	@RequestMapping(value = "/getdata", method = RequestMethod.GET)
-	public ArrayList sayHello() {
-	    return bookService.getAllBooks();
-	}
-	@RequestMapping(value = "/getdata1", method = RequestMethod.GET)
-	public List<Book> findByid(@RequestParam("itemid") String itemid ) {
-	    
-		return bookService.getAllBooks().stream().filter(s->s.getId()==Integer.parseInt(itemid)).collect(Collectors.toList());
-	}
-	
-	@RequestMapping(value = "/getdataparam", method = RequestMethod.GET)
-	public List<Book> findByid(@RequestParam("itemid") String itemid,@RequestParam("empid") String empid ) {
-		return bookService.getAllBooks().stream().filter(s->s.getId()==Integer.parseInt(itemid)).collect(Collectors.toList());
+	@GetMapping("/findbyidheadersandsubhedid/{subidid}/{headerid}")
+	public ResponseEntity<Object>  findByIdHeadersandsubid(@PathVariable("subidid") long subidid, @PathVariable("headerid") long headerid){
+		List<SideOfContent> header=headerOfSubjectAndSideOfSubject.findBysubidandheaderid(subidid,headerid);
+	     if(header.size()>0) {
+	    	 return  ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body(header);
+	     }
+		return  ResponseEntity.status(HttpStatus.SC_OK).body(header);	
 	}
 	
-	
-
-	@RequestMapping(value = "/adddata3", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<Book> setAllBooks(@RequestBody Book b) {
-	    System.out.println("this is value of data=="+b);
-		return bookService.setAllBooks(b);
+	@GetMapping(value = "/createheader",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<HeaderOfSubject>>  createHeader(@RequestBody ListOfHeader listOfHeader) {
+		List<HeaderOfSubject> header=headerOfSubjectAndSideOfSubject.createHeader(listOfHeader);
+		return  ResponseEntity.status(HttpStatus.SC_OK).body(header);
 	}
 }
