@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 
 public interface SideOfContentrepo extends JpaRepository<SideOfContent, Id> {
 
-	List<SideOfContent> findById(long id);
+              SideOfContent findById(long id);
 	@Query(value ="select * from side_of_content where id=:subidid and header_id=:headerid",nativeQuery = true)
 	List<SideOfContent> findByIdAndHeaderOfSubjectid(@Param("subidid") long subidid,@Param("headerid") long headerid);
 }

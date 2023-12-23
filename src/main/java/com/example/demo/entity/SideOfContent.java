@@ -19,7 +19,7 @@ public class SideOfContent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_generator")
 	private long id;
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch =FetchType.LAZY)
 	  @JoinColumn(name = "header_id", nullable = false)
 	  @OnDelete(action = OnDeleteAction.CASCADE)
 	  @JsonIgnore
