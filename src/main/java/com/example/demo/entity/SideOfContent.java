@@ -26,11 +26,23 @@ public class SideOfContent {
 	private HeaderOfSubject headerOfSubject;
 	private String sidemainheader;
 	private String sidesubheader;
-	@Lob
+	@Lob 
 	private String subjectcontent;
+	@Override
+	public String toString() {
+		return "SideOfContent [id=" + id + ", headerOfSubject=" + headerOfSubject + ", sidemainheader=" + sidemainheader
+				+ ", sidesubheader=" + sidesubheader + ", subjectcontent=" + subjectcontent + ", imagesro=" + imagesro
+				+ "]";
+	}
+
+
+	public SideOfContent() {
+	
+	}
+	
+	
 	public SideOfContent(long id, HeaderOfSubject headerOfSubject, String sidemainheader, String sidesubheader,
 			String subjectcontent, String imagesro) {
-		super();
 		this.id = id;
 		this.headerOfSubject = headerOfSubject;
 		this.sidemainheader = sidemainheader;

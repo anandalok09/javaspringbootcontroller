@@ -85,7 +85,7 @@ public class RestControllerExample {
 		return  ResponseEntity.status(HttpStatus.SC_OK).body(header);   
 	}
 	
-	@PutMapping(value = "/updateinsideheader/{id}"
+	@PutMapping(value = "/updateinsideheader/{id}")
 	public ResponseEntity<String>  
 	updateSideHeaderorcontent(@RequestBody SideOfContent sc,@PathParam("id") Long id) {
 	String header=headerOfSubjectAndSideOfSubject.updateSideHeaderorcontent(sc, id);

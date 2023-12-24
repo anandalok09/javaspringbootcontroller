@@ -13,8 +13,11 @@ public class HeaderOfSubject {
 	public long getId() {
 		return id;
 	}
+	public HeaderOfSubject() {
+		
+	}
 	public HeaderOfSubject(long id, String subjectheaderName) {
-		super();
+		
 		this.id = id;
 		this.subjectheaderName = subjectheaderName;
 	}

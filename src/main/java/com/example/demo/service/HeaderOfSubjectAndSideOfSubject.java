@@ -15,6 +15,7 @@ import com.example.demo.entity.SideOfContent;
 import com.example.demo.exception.NotUpdated;
 import com.example.demo.pojo.ListOfHeader;
 import com.example.demo.pojo.ListOfsideHeader;
+import com.example.demo.utility.UtilityInterface;
 @Service
 public class HeaderOfSubjectAndSideOfSubject {
 
@@ -64,9 +65,19 @@ public class HeaderOfSubjectAndSideOfSubject {
 	public String updateSideHeaderorcontent(SideOfContent sc, Long id) {
 		// TODO Auto-generated method stub
 		SideOfContent s=sideOfContentrepo.findById(id);
-		             s.setHeaderOfSubject(sc.setHeaderOfSubject(s.getHeaderOfSubject())) ;
-		             
-		              
-		return null;
+		
+		System.out.println("this is value of data ===="+s.getImagesro());
+		
+		
+		             s.setImagesro(sc.getImagesro());
+		             s.setSidemainheader(sc.getSidemainheader());
+		             s.setSidesubheader(sc.getSidesubheader());
+		             sc.setSubjectcontent(sc.getSubjectcontent());
+		             System.out.println("this is db object===="+s);
+		             System.out.println("this is filter object===="+sc);
+		        if( sideOfContentrepo.save(s)!=null) {
+		        	return UtilityInterface.updateMessage;
+		        }
+		        throw new NotUpdated(UtilityInterface.notUpdatedByID+""+id);     
 	}
 }
