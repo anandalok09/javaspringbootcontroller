@@ -15,4 +15,7 @@ public interface SideOfContentrepo extends JpaRepository<SideOfContent, Id> {
               SideOfContent findById(long id);
 	@Query(value ="select * from side_of_content where id=:subidid and header_id=:headerid",nativeQuery = true)
 	List<SideOfContent> findByIdAndHeaderOfSubjectid(@Param("subidid") long subidid,@Param("headerid") long headerid);
+	
+	@Query(value ="select * from side_of_content where header_id=:headerid",nativeQuery = true)
+	List<SideOfContent> findsideheaderByHeaderid(@Param("headerid") long headerid);
 }

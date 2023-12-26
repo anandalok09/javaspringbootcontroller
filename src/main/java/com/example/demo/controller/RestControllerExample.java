@@ -45,9 +45,15 @@ public class RestControllerExample {
 	@GetMapping("/getallheaders")
 	public ResponseEntity<Object>  getAllHeaders(){
 		List<HeaderOfSubject> header=headerOfSubjectAndSideOfSubject.finallHeader();
-	     if(header.size()>0) {
-	    	 return  ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body(header);
-	     }
+//	     if(header.size()>0) {
+//	    	 return  ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body(header);
+//	     }
+		return  ResponseEntity.status(HttpStatus.SC_OK).body(header);	
+	}
+	
+	@GetMapping("/getallsideheaders/{id}")
+	public ResponseEntity<Object>  getAllsideHeaders(@PathParam("id") long id){
+		List<SideOfContent> header=headerOfSubjectAndSideOfSubject.findSideheaderByheaderid(id); 
 		return  ResponseEntity.status(HttpStatus.SC_OK).body(header);	
 	}
 	@GetMapping("/findbyidheaders/{id}")

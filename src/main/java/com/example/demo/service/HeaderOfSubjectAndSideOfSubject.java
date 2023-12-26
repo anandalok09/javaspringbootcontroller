@@ -12,6 +12,7 @@ import com.example.demo.dao.HeaderOfSubjectrepo;
 import com.example.demo.dao.SideOfContentrepo;
 import com.example.demo.entity.HeaderOfSubject;
 import com.example.demo.entity.SideOfContent;
+import com.example.demo.exception.CustmizationException;
 import com.example.demo.exception.NotUpdated;
 import com.example.demo.pojo.ListOfHeader;
 import com.example.demo.pojo.ListOfsideHeader;
@@ -65,10 +66,6 @@ public class HeaderOfSubjectAndSideOfSubject {
 	public String updateSideHeaderorcontent(SideOfContent sc, Long id) {
 		// TODO Auto-generated method stub
 		SideOfContent s=sideOfContentrepo.findById(id);
-		
-		System.out.println("this is value of data ===="+s.getImagesro());
-		
-		
 		             s.setImagesro(sc.getImagesro());
 		             s.setSidemainheader(sc.getSidemainheader());
 		             s.setSidesubheader(sc.getSidesubheader());
@@ -79,5 +76,13 @@ public class HeaderOfSubjectAndSideOfSubject {
 		        	return UtilityInterface.updateMessage;
 		        }
 		        throw new NotUpdated(UtilityInterface.notUpdatedByID+""+id);     
+	}
+
+	public List<SideOfContent> findSideheaderByheaderid(long id) {
+		// TODO Auto-generated method stub
+		List<SideOfContent> sideOfContent=sideOfContentrepo.findsideheaderByHeaderid(id);
+		if(sideOfContent.size()==0)
+			throw new CustmizationException(UtilityInterface.notfoundbyid+id);
+		return sideOfContent;
 	}
 }
