@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -53,7 +54,7 @@ public class HeaderOfSubjectAndSideOfSubject {
 
 	public String updateHeader(String subjectheaderName, Long id) {
 		// TODO Auto-generated method stub
-		HeaderOfSubject headerOfSubject=(headerOfSubjectrepo.findById(id));
+		HeaderOfSubject headerOfSubject=(headerOfSubjectrepo.findById(id)).orElseThrow(()->new NoSuchElementException("No data avilable here"));
 		headerOfSubject.setSubjectheaderName(subjectheaderName);
 		
 		if(headerOfSubjectrepo.save(headerOfSubject)!=null) {
@@ -65,7 +66,9 @@ public class HeaderOfSubjectAndSideOfSubject {
 
 	public String updateSideHeaderorcontent(SideOfContent sc, Long id) {
 		// TODO Auto-generated method stub
-		SideOfContent s=sideOfContentrepo.findById(id);
+		SideOfContent s = sideOfContentrepo.findById(id)
+			    .orElseThrow(() -> new NoSuchElementException("Note available data"));
+
 		             s.setImagesro(sc.getImagesro());
 		             s.setSidemainheader(sc.getSidemainheader());
 		             s.setSidesubheader(sc.getSidesubheader());

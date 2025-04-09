@@ -8,6 +8,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.http.HttpStatus;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -40,6 +49,10 @@ public class RestControllerExample {
 
 	@Autowired
 	BookService bookService;
+	@Autowired
+    private JobLauncher jobLauncher;
+	@Autowired
+	private Job job;
 	@Autowired
 	HeaderOfSubjectAndSideOfSubject headerOfSubjectAndSideOfSubject;
 	@GetMapping("/getallheaders")
@@ -97,5 +110,22 @@ public class RestControllerExample {
 	String header=headerOfSubjectAndSideOfSubject.updateSideHeaderorcontent(sc, id);
 		return  ResponseEntity.status(HttpStatus.SC_OK).body(header);   
 	}
+	
+	@GetMapping(value = "/triger")
+	public String  joblunch() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+		try {
+			JobParameters jobParameters = new JobParametersBuilder()
+		            .addLong("time", System.currentTimeMillis()) // Adding a timestamp to ensure job uniqueness
+		            .toJobParameters();
+	         jobLauncher.run(job,jobParameters); // Launching the job
+	         return "Jobe success fully "; 	
+		}catch (Exception e) {
+			// TODO: handle exception
+			 return "Job failed ";
+		}
+	
+	}
+	
+	
 	
 }

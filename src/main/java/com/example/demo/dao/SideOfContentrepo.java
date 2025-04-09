@@ -10,7 +10,7 @@ import com.example.demo.entity.SideOfContent;
 
 import jakarta.persistence.Id;
 
-public interface SideOfContentrepo extends JpaRepository<SideOfContent, Id> {
+public interface SideOfContentrepo extends JpaRepository<SideOfContent, Long> {
 
               SideOfContent findById(long id);
 	@Query(value ="select * from side_of_content where id=:subidid and header_id=:headerid",nativeQuery = true)

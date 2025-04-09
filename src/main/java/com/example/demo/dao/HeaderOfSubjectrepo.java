@@ -8,7 +8,7 @@ import com.example.demo.entity.SideOfContent;
 
 import java.util.List;
 
-public interface HeaderOfSubjectrepo extends JpaRepository<HeaderOfSubject, Id> {
+public interface HeaderOfSubjectrepo extends JpaRepository<HeaderOfSubject, Long> {
 
 	HeaderOfSubject findById(long id);
 	List<HeaderOfSubject>findAll();
