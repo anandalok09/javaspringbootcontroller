@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dao.HeaderOfSubjectrepo;
 import com.example.demo.dao.SideOfContentrepo;
@@ -19,6 +20,10 @@ import com.example.demo.pojo.ListOfHeader;
 import com.example.demo.pojo.ListOfsideHeader;
 import com.example.demo.utility.UtilityInterface;
 @Service
+@Transactional /* this is class level tranjection
+if we do class level tranjection , tranjection will applay all public methode 
+
+*/ 
 public class HeaderOfSubjectAndSideOfSubject {
 
 	@Autowired
@@ -63,7 +68,11 @@ public class HeaderOfSubjectAndSideOfSubject {
 		throw new NotUpdated("geating error during updating  Header where id ="+id);
 		
 	}
-
+	/*here is method level tranjection 
+	 * if we need o applay tranjection on particular method then we can applay anotation on that method 
+	 * if we need tranjection on private method then we have to use on that method but tranjection not applay on private method
+	 * */
+  @Transactional
 	public String updateSideHeaderorcontent(SideOfContent sc, Long id) {
 		// TODO Auto-generated method stub
 		SideOfContent s = sideOfContentrepo.findById(id)
